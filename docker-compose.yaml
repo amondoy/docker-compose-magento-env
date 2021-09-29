@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:10.4
+    container_name: magento-mariadb
+    networks:
+      - magento-network
+    ports:
+      - "3306:3306"
+    volumes:
+      - magento-mariadb-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: supersecretpassword
+      MYSQL_USER: boytilaw
+      MYSQL_PASSWORD: secretpassword
+      MYSQL_DATABASE: magento
+
+
+    # Elastic Search required by Magento 2.4
+  elasticsearch:
+    image: elasticsearch:7.10.1
+    container_name: magento-elasticsearch
+    networks:
+      - magento-network
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      discovery.type: single-node
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER: boytilaw
+        UID: 1000
+        GID: 1000
+    container_name: magento-web
+    networks:
+      - magento-network
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/workspaces/magento
+
+volumes:
+  magento-mariadb-data:
+
+networks:
+  magento-network:
+      
