@@ -29,6 +29,21 @@ services:
     environment:
       discovery.type: single-node
 
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    restart: always
+    networks:
+      - magento-network
+    ports:
+      - "8080:80"
+    volumes:
+      - ./magento:/var/www/html
+    depends_on:
+      - mariadb
+      - web
+
   web:
     build:
       context: .
