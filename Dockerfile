@@ -17,4 +17,7 @@ RUN apt-get -y install php7.4-Xdebug
 RUN echo "xdebug.remote_enable=on" >> /etc/php/7.4/mods-available/xdebug.ini
 RUN echo "xdebug.remote_autostart=on" >> /etc/php/7.4/mods-available/xdebug.ini
 
-WORKDIR /workspaces/magento 
+WORKDIR /workspaces/magento
+
+# Work around to keep the container from closing itself after it is created
+CMD ["sleep", "infinity"]
