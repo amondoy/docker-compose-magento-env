@@ -4,6 +4,9 @@ ARG USER=docker
 ARG UID=1000
 ARG GID=1000
 
+RUN mkdir -p ~/.config/composer
+ADD ~/.config/composer/auth.json ~/.config/composer/auth.json
+
 # ADD SURY Php PPA repo
 RUN apt-get update && apt-get -y install lsb-release apt-transport-https ca-certificates apt-utils wget curl gnupg libxml2-dev git
 RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
