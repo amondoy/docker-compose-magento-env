@@ -34,6 +34,7 @@ services:
       context: .
       dockerfile: nginx.dockerfile
     restart: always
+    container_name: magento-nginx
     networks:
       - magento-network
     ports:
