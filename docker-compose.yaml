@@ -7,7 +7,7 @@ services:
     networks:
       - magento-network
     ports:
-      - "3306:3306"
+      - "3307:3307"
     volumes:
       - magento-mariadb-data:/var/lib/mysql
     environment:
