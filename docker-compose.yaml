@@ -11,11 +11,11 @@ services:
     volumes:
       - magento-mariadb-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: supersecretpassword
-      MYSQL_USER: magento
-      MYSQL_PASSWORD: secretpassword
-      MYSQL_DATABASE: magento
-
+      MARIADB_ROOT_PASSWORD: supersecretpassword
+      MARIADB_USER: magento
+      MARIADB_PASSWORD: secretpassword
+      MARIADB_DATABASE: magento
+      MARIADB_ROOT_HOST: localhost
 
   # Elastic Search required by Magento 2.4
   elasticsearch:
@@ -53,6 +53,8 @@ services:
     restart: always
     volumes:
       - ./magento:/workspaces/magento
+    networks:
+      - magento-network
 
 volumes:
   magento-mariadb-data:
