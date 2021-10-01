@@ -12,12 +12,12 @@ services:
       - magento-mariadb-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: supersecretpassword
-      MYSQL_USER: boytilaw
+      MYSQL_USER: magento
       MYSQL_PASSWORD: secretpassword
       MYSQL_DATABASE: magento
 
 
-    # Elastic Search required by Magento 2.4
+  # Elastic Search required by Magento 2.4
   elasticsearch:
     image: elasticsearch:7.10.1
     container_name: magento-elasticsearch
@@ -40,26 +40,19 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./magento:/var/www/html
+      - ./magento:/workspaces/magento
     depends_on:
       - mariadb
-      - web
+      - php
 
-  web:
+  php:
+    container_name: magento-php
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        USER: boytilaw
-        UID: 1000
-        GID: 1000
-    container_name: magento-web
-    networks:
-      - magento-network
-    ports:
-      - "5000:5000"
+      dockerfile: php.dockerfile
+    restart: always
     volumes:
-      - .:/workspaces/magento
+      - ./magento:/workspaces/magento
 
 volumes:
   magento-mariadb-data:
