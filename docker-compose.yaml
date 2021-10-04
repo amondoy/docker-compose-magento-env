@@ -3,20 +3,20 @@ version: '3'
 services:
   mariadb:
     image: mariadb:10.4
+    restart: always
     container_name: magento-mariadb
     networks:
       - magento-network
     ports:
-      - "3307:3307"
+      - "3306:3306"
     volumes:
-      - magento-mariadb-data:/var/lib/mysql
+      - ./mariadb-data:/var/lib/mysql
     environment:
       MARIADB_ROOT_PASSWORD: supersecretpassword
       MARIADB_USER: magento
       MARIADB_PASSWORD: secretpassword
       MARIADB_DATABASE: magento
-      MARIADB_ROOT_HOST: localhost
-
+      
   # Elastic Search required by Magento 2.4
   elasticsearch:
     image: elasticsearch:7.10.1
