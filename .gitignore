@@ -49,4 +49,5 @@ node_modules/
 *.komodoproject
 .komodotools
 mariadb-data/
-magento/
+magento/*
+!magento/Makefile
